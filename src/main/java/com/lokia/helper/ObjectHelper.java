@@ -32,6 +32,20 @@ public class ObjectHelper {
 
     }
 
+    /**
+     * 比较的是对象中的对象的值.
+     *
+     * <p>
+     * 如果需要忽略的是<code>T</code>下面的属性的属性，则用"."表示层级关系.(基础类型不支持该功能)
+     * <li>比如如果<code>T</code> 是Logic，想忽略它下面的ComponentNode中的info字段，则
+     * ignoredProps表示为"componentNodes.info"
+     *
+     * @param expected
+     * @param actual
+     * @param ignoredProps
+     *            需要忽略的属性. 形式为"xxx.xxx"或者"xxx"
+     * @return
+     */
     public static  <T> boolean isEquals(T expected, T actual, String... ignoredProps) {
         if (actual == null && expected == null) {
             return true;
