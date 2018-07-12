@@ -7,32 +7,32 @@ import java.util.*;
 
 public class ObjectHelper {
     private static final String STR_DOT = ".";
-    private static Set<Class<?>> BASIC_CLASS_SET = new HashSet<>();
-    private static Set<Class<?>> COLLECTION_CLASS_SET = new HashSet<>();
+    private static Set<Class<?>> BASIC_CLS_SET = new HashSet<>();
+    private static Set<Class<?>> COLLECTION_CLS_SET = new HashSet<>();
 
     static {
-        BASIC_CLASS_SET.add(String.class);
-        BASIC_CLASS_SET.add(Long.TYPE);
-        BASIC_CLASS_SET.add(Integer.TYPE);
-        BASIC_CLASS_SET.add(Boolean.TYPE);
-        BASIC_CLASS_SET.add(Short.TYPE);
-        BASIC_CLASS_SET.add(Double.TYPE);
-        BASIC_CLASS_SET.add(Float.TYPE);
-        BASIC_CLASS_SET.add(Long.class);
-        BASIC_CLASS_SET.add(Integer.class);
-        BASIC_CLASS_SET.add(Boolean.class);
-        BASIC_CLASS_SET.add(Short.class);
-        BASIC_CLASS_SET.add(Double.class);
-        BASIC_CLASS_SET.add(Float.class);
-        BASIC_CLASS_SET.add(Object.class);
+        BASIC_CLS_SET.add(String.class);
+        BASIC_CLS_SET.add(Long.TYPE);
+        BASIC_CLS_SET.add(Integer.TYPE);
+        BASIC_CLS_SET.add(Boolean.TYPE);
+        BASIC_CLS_SET.add(Short.TYPE);
+        BASIC_CLS_SET.add(Double.TYPE);
+        BASIC_CLS_SET.add(Float.TYPE);
+        BASIC_CLS_SET.add(Long.class);
+        BASIC_CLS_SET.add(Integer.class);
+        BASIC_CLS_SET.add(Boolean.class);
+        BASIC_CLS_SET.add(Short.class);
+        BASIC_CLS_SET.add(Double.class);
+        BASIC_CLS_SET.add(Float.class);
+        BASIC_CLS_SET.add(Object.class);
 
         // COLLECTION
-        COLLECTION_CLASS_SET.add(Set.class);
-        COLLECTION_CLASS_SET.add(List.class);
+        COLLECTION_CLS_SET.add(Set.class);
+        COLLECTION_CLS_SET.add(List.class);
 
     }
 
-    protected <T> boolean isEquals(T expected, T actual, String... ignoredProps) {
+    public static  <T> boolean isEquals(T expected, T actual, String... ignoredProps) {
         if (actual == null && expected == null) {
             return true;
         }
@@ -101,7 +101,7 @@ public class ObjectHelper {
     }
 
     private static boolean isBasicClass(Class<?> cls) {
-        return BASIC_CLASS_SET.contains(cls);
+        return BASIC_CLS_SET.contains(cls);
     }
 
     /**
@@ -111,7 +111,7 @@ public class ObjectHelper {
      *            形式为"xxx.xxx"或者"xxx"
      * @return
      */
-    private Set<String> getCurrentIgnoredProps(String[] ignoredProps) {
+    private static Set<String> getCurrentIgnoredProps(String[] ignoredProps) {
         Set<String> result = new HashSet<>();
         if (ignoredProps == null || ignoredProps.length < 1) {
             return result;
@@ -140,7 +140,7 @@ public class ObjectHelper {
      * @param ignoredProps   形式为"xxx.xxx"或者"xxx"
      * @return
      */
-    private String[] getNextIgnoredProps(String prefix, String[] ignoredProps) {
+    private static String[] getNextIgnoredProps(String prefix, String[] ignoredProps) {
         List<String> result = new ArrayList<>();
         if (ignoredProps == null || ignoredProps.length < 1 || StringUtils.isBlank(prefix)) {
             return null;
@@ -159,15 +159,15 @@ public class ObjectHelper {
         return CollectionHelper.isEmpty(result) ? null : result.toArray(new String[] {});
     }
 
-    private boolean isMapClass(Class<?> fieldCls) {
+    private static boolean isMapClass(Class<?> fieldCls) {
         return Map.class == fieldCls;
     }
 
     private static boolean isCollectionClass(Class<?> cls) {
-        return COLLECTION_CLASS_SET.contains(cls);
+        return COLLECTION_CLS_SET.contains(cls);
     }
 
-    private boolean isMapEquals(Object actualFieldVal, Object expectedFieldVal, String... ignoredProps) {
+    private static boolean isMapEquals(Object actualFieldVal, Object expectedFieldVal, String... ignoredProps) {
         if (actualFieldVal == null && expectedFieldVal == null) {
             return true;
         }
@@ -193,17 +193,17 @@ public class ObjectHelper {
         return isEquals;
     }
 
-    private boolean isCollectionObjEquals(Object actual, Object expected, String... ignoredProps) {
+    private static boolean isCollectionObjEquals(Object first, Object second, String... ignoredProps) {
 
-        if (actual == null && expected == null) {
+        if (first == null && second == null) {
             return true;
         }
-        if (actual == null || expected == null) {
+        if (first == null || second == null) {
             return false;
         }
 
-        Collection<?> tmpActual = (Collection<?>) actual;
-        Collection<?> tmpExpected = (Collection<?>) expected;
+        Collection<?> tmpActual = (Collection<?>) first;
+        Collection<?> tmpExpected = (Collection<?>) second;
 
         if (!CollectionHelper.isEmpty(tmpActual)) {
             Object[] tmpActualArr = new Object[tmpActual.size()];
