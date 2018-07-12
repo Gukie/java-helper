@@ -119,7 +119,8 @@ public class ObjectHelper {
     }
 
     /**
-     * 取"."之前的值
+     * 如果该属性，是叶子属性了，即没有下一层了，则属于当前层.
+     * 比如"xxx.yyy.zzz","zzz"属于叶子属性.
      *
      * @param ignoredProps
      *            形式为"xxx.xxx"或者"xxx"
@@ -133,16 +134,9 @@ public class ObjectHelper {
 
         for (String ignoreProp : ignoredProps) {
             int index = ignoreProp.indexOf(STR_DOT);
-            if(index == 0){
-                continue;
-            }
             if (index < 0) {
                 result.add(ignoreProp);
-            } else{
-                String currIgnoredProp = ignoreProp.substring(0, index);
-                result.add(currIgnoredProp);
             }
-
         }
         return result;
     }
