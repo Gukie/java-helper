@@ -186,10 +186,14 @@ public class ObjectHelper {
         Map acutalMap = (Map) actualFieldVal;
         Map expectedMap = (Map) expectedFieldVal;
 
+        Set<String> currentIgnoredProps = getCurrentIgnoredProps(ignoredProps);
         Set<Map.Entry> actualEntrySet = acutalMap.entrySet();
         boolean isEquals = true;
         for (Map.Entry entry : actualEntrySet) {
             Object key = entry.getKey();
+            if(currentIgnoredProps.contains(key)){
+                continue;
+            }
             Object actualValue = entry.getValue();
             Object expectedValue = expectedMap.get(key);
             if (!isEquals(actualValue, expectedValue, ignoredProps)) {
